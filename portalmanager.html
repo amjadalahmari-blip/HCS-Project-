@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>بوابة التوجيه والوصول الموحد | تجمع حائل الصحي</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet"/>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --pr: #1B4F9B; --pr-d: #0D3272; --pr-l: #E8EEF8;
+  --tl: #1B6B4A; --nv: #1b214d;
+  --tx: #1a2332; --mu: #5a6a82; --bd: #dde3ed;
+  --bg: #f4f7fb;
+}
+body { font-family: 'Tajawal', sans-serif; color: var(--tx); background: var(--bg); overflow-x: hidden; }
+
+/* ══ NAVBAR ══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500; height: 68px;
+  padding: 0 40px; display: flex; align-items: center; justify-content: space-between;
+  background: var(--nv); border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 24px rgba(0,0,0,.25);
+}
+.nav-logo-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo-link img { height: 46px; width: auto; display: block; }
+
+.btn-back { height: 36px; padding: 0 16px; background: rgba(255,255,255,0.15); color: #fff; border: none; border-radius: 8px; font-family: 'Tajawal', sans-serif; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; transition: background 0.2s; z-index: 510; }
+.btn-back:hover { background: rgba(255,255,255,0.25); }
+
+/* ══ HERO SECTION ══ */
+.dashboard-hero { height: 180px; padding-top: 68px; display: flex; align-items: center; position: relative; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; z-index: 0; background-position: center; background-size: cover; background-color: var(--nv); background-blend-mode: multiply; }
+.hero-content { position: relative; z-index: 2; width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 48px; color: #fff; }
+.hero-title { font-size: 24px; font-weight: 800; }
+
+/* ══ MAIN LAYOUT ══ */
+.main-dashboard-container { max-width: 1440px; margin: 32px auto 80px; padding: 0 48px; }
+.section-header-title { font-size: 16px; font-weight: 800; color: var(--nv); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+.section-header-title::after { content: ''; flex: 1; height: 1px; background: var(--bd); }
+
+/* شبكة الأقسام الـ 7 المعتمدة والمطابقة للمشروع */
+.departments-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+
+.dept-card { background: #fff; border: 1px solid var(--bd); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; justify-content: center; min-height: 120px; position: relative; overflow: hidden; text-decoration: none; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+.dept-card::before { content: ''; position: absolute; top: 0; right: 0; width: 6px; height: 100%; background: var(--pr); transition: background 0.2s; }
+
+.dept-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(27, 79, 155, 0.08); border-color: rgba(27, 79, 155, 0.2); }
+.dept-card:hover::before { background: var(--tl); }
+
+.dept-name { font-size: 16px; font-weight: 800; color: var(--nv); line-height: 1.4; }
+
+/* شاشة التحويل التلقائي المؤقتة لرؤساء الأقسام */
+.routing-overlay { text-align: center; background: #fff; padding: 60px; border-radius: 16px; border: 1px solid var(--bd); margin-top: 20px; }
+.spinner { width: 40px; height: 40px; border: 4px solid var(--bd); border-top-color: var(--pr); border-radius: 50%; animation: spin 1s infinite linear; margin: 0 auto 16px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo-link">
+    <img src="../assets/images/hcslogo.png" alt="شعار تجمع حائل الصحي"/>
+  </div>
+  
+  <a href="#" class="btn-back" onclick="localStorage.clear(); window.location.href='login.html'; return false;"> تسجيل الخروج</a>
+</nav>
+
+<section class="dashboard-hero">
+  <div class="hero-bg" style="background-image: url('../assets/images/net.mov');"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">  </h1>
+  </div>
+</section>
+
+<main class="main-dashboard-container">
+  
+  <div id="allowed-gateway-view" style="display: none;">
+    <div class="section-header-title">الأقسام الرئيسية</div>
+    
+    <div class="departments-grid">
+      
+      <a href="serviceLines/serviceLines.html" class="dept-card">
+        <div class="dept-name">مسار الخدمات الإكلينيكية</div>
+      </a>
+
+      <a href="alliedHealth/alliedHealth.html" class="dept-card">
+        <div class="dept-name">الخدمات الصحية المساندة</div>
+      </a>
+
+      <a href="nursing/nursing.html" class="dept-card">
+        <div class="dept-name">التمريض</div>
+      </a>
+
+      <a href="publicHealth/publicHealth.html" class="dept-card">
+        <div class="dept-name">الصحة العامة والمجتمعية</div>
+      </a>
+
+      <a href="modelOfCare/modelOfCare.html" class="dept-card">
+        <div class="dept-name">نموذج الرعاية الصحية</div>
+      </a>
+
+      <a href="clinical/clinical.html" class="dept-card">
+        <div class="dept-name">الأداء الإكلينيكي</div>
+      </a>
+
+      <a href="populationHealth/populationHealth.html" class="dept-card">
+        <div class="dept-name">الصحة السكانية</div>
+      </a>
+
+    </div>
+  </div>
+
+  <div id="routing-loading-view" class="routing-overlay">
+    <div class="spinner"></div>
+    <h2 style="color:var(--nv); font-size:16px; font-weight:800;">جاري فحص وتأكيد نطاق الصلاحيات...</h2>
+    <p style="margin-top:6px; color:var(--mu); font-size:13px;" id="routing-status-txt">يتم الآن توجيهك تلقائياً إلى القسم المخصص لك.</p>
+  </div>
+
+</main>
+
+<script>
+const API_BASE = 'http://localhost:5050/api';
+
+// خريطة ربط صلاحيات قاعدة البيانات بروابط الأقسام
+const ROLE_REDIRECT_MAP = {
+  serviceLines:    'serviceLines/serviceLines.html',
+  alliedHealth:    'alliedHealth/alliedHealth.html',
+  nursing:         'nursing/nursing.html',
+  publicHealth:    'publicHealth/publicHealth.html',
+  modelOfCare:     'modelOfCare/modelOfCare.html',
+  clinical:        'clinical/clinical.html',
+  populationHealth:'populationHealth/populationHealth.html'
+};
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const token = localStorage.getItem('hcs_token');
+
+  // لا توكن = ارجع لصفحة اللوجن فوراً
+  if (!token) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  try {
+    // التحقق من الجلسة مع الباك إند وجلب بيانات المستخدم الحالية
+    const res  = await fetch(`${API_BASE}/auth/me`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (!res.ok) {
+      // التوكن منتهي أو غير صالح
+      localStorage.clear();
+      window.location.href = 'login.html';
+      return;
+    }
+
+    const { user } = await res.json();
+
+    // Super_Admin → يشوف كل الأقسام
+    if (user.role === 'Super_Admin' || user.role === 'General_Manager') {
+      document.getElementById('allowed-gateway-view').style.display = 'block';
+      document.getElementById('routing-loading-view').style.display = 'none';
+      return;
+    }
+
+    // Department_Head → توجيه تلقائي لقسمه بناء على dept_key
+    document.getElementById('allowed-gateway-view').style.display = 'none';
+    document.getElementById('routing-loading-view').style.display = 'block';
+
+    const target = ROLE_REDIRECT_MAP[user.dept_key];
+
+    if (target) {
+      document.getElementById('routing-status-txt').textContent =
+        `جاري توجيهك إلى قسمك المخصص...`;
+      setTimeout(() => { window.location.href = target; }, 1200);
+    } else {
+      // دور غير معروف → اللوجن
+      localStorage.clear();
+      window.location.href = 'login.html';
+    }
+
+  } catch (err) {
+    // فشل الاتصال بالسيرفر → أظهر رسالة واضحة
+    document.getElementById('routing-status-txt').textContent =
+      '⚠️ تعذّر الاتصال بالسيرفر — تأكد من تشغيل الباك إند على المنفذ 5050';
+  }
+});
+</script>
+</body>
+</html>

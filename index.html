@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>تجمع حائل الصحي — إدارة الخدمات الصحية</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pr:#1B4F9B;--pr-d:#0D3272;--pr-l:#E8EEF8;
+  --tl:#1B6B4A;--nv:#1b214d;
+  --tx:#1a2332;--mu:#5a6a82;--bd:#dde3ed;
+  --sf:#ffffff;--bg:transparent;
+  --sec-white: rgba(255,255,255,0.55);
+  --sec-gray: rgba(244,247,251,0.55);
+  --card-bg: #ffffff;
+  --acc-tag-bg: #f8f9fc;
+}
+[data-theme="dark"] {
+  --tx: #e2e8f0; --mu: #94a3b8; --bd: #334155;
+  --sec-white: rgba(15, 23, 42, 0.8);
+  --sec-gray: rgba(30, 41, 59, 0.7);
+  --card-bg: #1e293b;
+  --acc-tag-bg: #0f172a;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Tajawal',sans-serif;color:var(--tx);background:#f4f7fb;overflow-x:hidden;position:relative;transition: background .3s, color .3s;}
+[data-theme="dark"] body { background: #0f172a; }
+#wave-container {
+  position: absolute;
+  top: calc(100vh - 68px); 
+  left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+#waveCanvas {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: block;
+}
+nav, .hero, .sec, footer{position:relative;z-index:1}
+
+/* ══ NAVBAR ══ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;height:68px;
+  padding:0 40px;display:flex;align-items:center;justify-content:space-between;
+  background:transparent;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  transition:background .35s,box-shadow .35s,border-color .35s;
+}
+nav.scrolled{
+  background:rgba(27,33,77,0.96);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 2px 24px rgba(0,0,0,.25);
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;order:1}
+.nav-logo img{height:46px;width:auto;object-fit:contain}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none;order:2;margin:0 auto}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.80);text-decoration:none;
+  position:relative;padding-bottom:4px;transition:color .2s}
+.nav-links a::after{content:'';position:absolute;bottom:0;right:0;width:0;height:2px;
+  background:var(--pr);border-radius:2px;transition:width .25s}
+.nav-links a:hover {color:#fff}
+.nav-links a:hover::after{width:100%}
+.nav-actions{display:flex;align-items:center;gap:14px;order:3;}
+.nav-icon-btn{
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
+  width:36px;height:36px;border-radius:10px;color:#fff;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:all .2s;
+}
+.nav-icon-btn:hover{background:rgba(255,255,255,0.2);transform:translateY(-1px);}
+.nav-icon-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;}
+.btn-nav{height:36px;padding:0 20px;background:var(--pr);color:#fff;border:none;
+  border-radius:8px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;
+  text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+  transition:background .2s;}
+.btn-nav:hover {background:var(--pr-d)}
+
+/* ══ HERO ══ */
+.hero{
+  min-height:620px;height:calc(100vh - 68px);max-height:760px;
+  display:flex;align-items:center;
+  padding-top:68px;overflow:hidden;
+  background: transparent;
+}
+.hero-video-bg {
+  position: absolute;inset: 0;z-index: 0;
+  width: 100%;height: 100%;object-fit: cover;
+}
+.hero-overlay {
+  position: absolute;inset: 0;z-index: 1;
+  background-color: rgba(27, 33, 77, 0.55); 
+}
+.hero-content {
+  position: relative;z-index: 2;width: 100%;max-width: 1280px;
+  margin: 0 auto;padding: 48px 48px;
+  display: grid;grid-template-columns: 1fr 340px;gap: 64px;align-items: center;
+}
+.hero-cards{display:flex;flex-direction:column;gap:14px;order:2}
+.hcard{
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.18);
+  border-radius:16px;padding:18px 22px;
+  display:flex;align-items:center;gap:16px;
+  cursor:pointer;text-decoration:none;
+  transition:background .25s,transform .2s,box-shadow .2s;
+}
+.hcard:hover{background:rgba(255,255,255,0.2);transform:translateX(-4px);box-shadow:0 12px 32px rgba(0,0,0,.25);}
+html[dir="ltr"] .hcard:hover{transform:translateX(4px);}
+.hcard-arrow{width:40px;height:40px;border-radius:10px;flex-shrink:0;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;transition:background .2s;}
+.hcard:hover .hcard-arrow{background:var(--pr)}
+.hcard-info{flex:1;text-align:right}
+html[dir="ltr"] .hcard-info{text-align:left}
+.hcard-label{font-size:12px;color:#b3e5fc;margin-bottom:4px;font-weight:600}
+.hcard-title{font-size:14px;font-weight:700;color:#fff;line-height:1.5}
+.hero-text{text-align:right;order:1;}
+html[dir="ltr"] .hero-text{text-align:left;}
+.hero-title{font-size:42px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:18px;text-shadow:0 2px 14px rgba(0,0,0,.35);}
+.hero-title .accent{color:#4FC3F7}
+.hero-desc{font-size:16px;color:rgba(255,255,255,.85);line-height:1.9;max-width:620px;text-shadow:0 1px 8px rgba(0,0,0,.2);}
+
+/* ── SECTIONS ── */
+.sec{padding:72px 0;overflow:hidden;transition: background .3s;}
+.sec.white{background:var(--sec-white);backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px);}
+.sec.gray{background:var(--sec-gray);backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px);}
+.sec-in{max-width:1280px;margin:0 auto;padding:0 40px}
+.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px}
+.sec-title-line{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.sec-mark{width:4px;height:28px;background:var(--pr);border-radius:2px;flex-shrink:0}
+.sec-title{font-size:26px;font-weight:800;color:var(--nv)}
+[data-theme="dark"] .sec-title { color: #fff; }
+.sec-title .hi{color:var(--pr)}
+.sec-sub{font-size:13px;color:var(--mu);padding-right:16px}
+html[dir="ltr"] .sec-sub{padding-right:0;padding-left:16px}
+.see-all{font-size:13px;color:var(--pr);font-weight:600;text-decoration:none;white-space:nowrap;cursor:pointer}
+.see-all:hover{text-decoration:underline}
+
+/* ── ANNOUNCEMENTS ── */
+.ann-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.ann-card{background:var(--card-bg);border:1px solid var(--bd);border-radius:16px;overflow:hidden;transition:box-shadow .25s,transform .2s,background .3s,border-color .3s;cursor:pointer}
+.ann-card:hover{box-shadow:0 8px 32px rgba(27,79,155,.12);transform:translateY(-3px)}
+.ann-img-wrap{width:100%;height:190px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--nv),var(--pr))}
+.ann-img-wrap img.bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.65;transition:transform .4s}
+.ann-card:hover .ann-img-wrap img.bg-img{transform:scale(1.04)}
+.ann-img-wrap .logo-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.ann-img-wrap .logo-overlay img{height:52px;object-fit:contain;}
+.ann-placeholder{width:100%;height:190px;border-bottom:1px solid var(--bd);background:var(--sec-gray);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.ann-placeholder-icon{font-size:32px;opacity:.22}
+.ann-placeholder-txt{font-size:12px;color:var(--mu);opacity:.6;text-align:center;padding:0 16px}
+.ann-body{padding:16px 18px}
+.ann-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ann-type{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600;background:var(--pr-l);color:var(--pr)}
+.ann-date{font-size:11px;color:var(--mu)}
+.ann-title{font-size:15px;font-weight:700;color:var(--nv);margin-bottom:7px;line-height:1.55}
+[data-theme="dark"] .ann-title { color: #fff; }
+.ann-desc{font-size:13px;color:var(--mu);line-height:1.7}
+
+/* ── ORG TREE ── */
+.org-tree{display:flex;flex-direction:column;align-items:center;margin-bottom:36px}
+.org-root{background:var(--nv);color:#fff;border-radius:16px;padding:20px 48px;text-align:center;box-shadow:0 4px 20px rgba(27,33,77,.18)}
+.org-root-title{font-size:20px;font-weight:800;letter-spacing:.3px}
+.org-root-en{font-size:10px;color:rgba(255,255,255,.5);font-weight:600;letter-spacing:2.5px;margin-top:4px;text-transform:uppercase}
+.org-vl{width:2px;height:24px;background:var(--bd);margin:0 auto}
+.org-hl-wrap{position:relative;width:100%;display:flex;justify-content:space-between;gap:12px}
+.org-hl{position:absolute;top:0;left:0;right:0;height:2px;background:var(--bd)}
+.org-lv1-col{display:flex;flex-direction:column;align-items:center;flex:1}
+.org-lv1-node{
+  background:var(--card-bg);border:1.5px solid var(--bd);border-top:3px solid var(--pr);
+  border-radius:12px;padding:16px 12px;text-align:center;width:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:box-shadow .2s,border-color .2s,background .3s;
+}
+[data-theme="dark"] .org-lv1-node{background:var(--card-bg)}
+.org-lv1-node:hover{border-color:var(--pr);box-shadow:0 4px 16px rgba(27,79,155,.12)}
+.org-lv1-title{font-size:13px;font-weight:800;color:var(--nv);line-height:1.4}
+[data-theme="dark"] .org-lv1-title{color:#fff}
+.org-lv1-en{font-size:9px;color:var(--mu);font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+
+/* ── DEPT CARDS (replaces accordion) ── */
+.dept-cards-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:stretch}
+.dept-card-new{
+  background:var(--card-bg);border:1.5px solid #c5d4f0;border-radius:16px;
+  overflow:hidden;transition:transform .2s,box-shadow .2s,background .3s;
+  display:flex;flex-direction:column;
+}
+[data-theme="dark"] .dept-card-new{border-color:var(--bd)}
+.dept-card-new:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(27,79,155,.13)}
+.dept-card-head{
+  padding:18px 16px 16px;background:var(--pr-l);border-bottom:1px solid #c5d4f0;
+  flex-shrink:0;
+}
+[data-theme="dark"] .dept-card-head{background:rgba(27,79,155,.18);border-color:var(--bd)}
+.dept-card-name{font-size:14px;font-weight:800;color:var(--nv);line-height:1.5}
+[data-theme="dark"] .dept-card-name{color:#fff}
+.dept-card-en{font-size:9px;font-weight:700;letter-spacing:1px;margin-top:4px;text-transform:uppercase;color:var(--pr);opacity:.7}
+.dept-card-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;border-radius:20px;padding:3px 12px;
+  margin-top:10px;background:var(--nv);color:#fff;
+}
+.dept-card-body{
+  padding:14px;flex:1;
+  display:flex;flex-wrap:wrap;align-items:flex-start;
+  gap:6px;align-content:flex-start;
+}
+.dept-tag-new{
+  display:inline-flex;align-items:center;font-size:11px;padding:4px 10px;
+  border-radius:20px;font-weight:600;background:#dce6f8;color:var(--pr);
+  transition:background .15s;line-height:1.4;margin:0;
+}
+[data-theme="dark"] .dept-tag-new{background:rgba(27,79,155,.25);color:#93b8f0}
+.dept-tag-new.more{background:var(--pr-l);color:var(--mu)}
+[data-theme="dark"] .dept-tag-new.more{background:rgba(255,255,255,.06);color:var(--mu)}
+.dept-tag-new.special{background:#dce6f8;color:var(--pr)}
+[data-theme="dark"] .dept-tag-new.special{background:rgba(27,79,155,.25);color:#93b8f0}
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(15, 20, 55, 0.6);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  z-index: 1000; display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal-container {
+  background: var(--card-bg); width: 90%; max-width: 1000px; max-height: 85vh;
+  border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  display: flex; flex-direction: column; overflow: hidden;
+  transform: translateY(30px); transition: transform 0.3s ease; border: 1px solid var(--bd);
+}
+.modal-overlay.open .modal-container { transform: translateY(0); }
+.modal-header {
+  padding: 20px 32px; border-bottom: 1px solid var(--bd);
+  display: flex; align-items: center; justify-content: space-between; background: var(--sec-gray);
+}
+.modal-title { font-size: 20px; font-weight: 800; color: var(--nv); }
+[data-theme="dark"] .modal-title { color: #fff; }
+.modal-close {
+  background: var(--pr-l); border: none; width: 36px; height: 36px;
+  border-radius: 50%; color: var(--pr); font-weight: 800; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+}
+.modal-close:hover { background: var(--pr); color: #fff; }
+.modal-body { padding: 32px; overflow-y: auto; flex: 1; }
+
+/* ── FOOTER ── */
+footer{background:var(--nv);color:#fff;padding:56px 60px 36px}
+.ft-top{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.08);flex-wrap:wrap;gap:20px}
+.ft-brand{display:flex;align-items:center;gap:14px}
+.ft-brand img{height:42px;width:auto;object-fit:contain;flex-shrink:0;display:block;}
+.ft-brand-ar{font-size:16px;font-weight:700;line-height:1.3}
+.ft-brand-en{font-size:12px;color:rgba(255,255,255,.4);margin-top:3px;line-height:1.3}
+.ft-links{display:flex;gap:28px;flex-wrap:wrap}
+.ft-links a{font-size:14px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+.ft-links a:hover {color:#fff}
+.ft-bottom{max-width:1400px;margin:24px auto 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;width:100%;}
+.ft-copy{font-size:13px;color:rgba(255,255,255,.4);font-weight:500;order:1;text-align:right;padding-right:5px;}
+html[dir="ltr"] .ft-copy{text-align:left;}
+.ft-developer{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:400;color:rgba(255,255,255,.6);order:2;text-align:left;}
+html[dir="ltr"] .ft-developer{text-align:right;}
+.ft-developer .dev-name{color:#dce2e5 !important;font-size:12px !important;font-weight:400 !important;letter-spacing:.1px !important;}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.rv.on{opacity:1;transform:translateY(0)}
+
+</style>
+</head>
+<body>
+
+<div id="mainContent">
+<div id="wave-container" aria-hidden="true">
+  <canvas id="waveCanvas"></canvas>
+</div>
+
+<nav id="nav">
+  <div class="nav-logo">
+    <img src="assets/images/hcslogo.png" alt="تجمع حائل الصحي"/>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#ann" id="lnk-ann">الإعلانات</a></li>
+    <li><a href="#org" id="lnk-org">الهيكل التنظيمي</a></li>
+    <li><a href="#awards" id="lnk-awards">الجوائز</a></li>
+    <li><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" id="lnk-about">عن المنصة</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon-btn" onclick="toggleLanguage()" title="تغيير اللغة / Change Language">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+    </button>
+    <button class="nav-icon-btn" onclick="toggleFullscreen()" id="fullscreenBtn" title="ملء الشاشة / Fullscreen">
+      <svg viewBox="0 0 24 24" id="fullscreenIcon"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+    </button>
+    <button class="nav-icon-btn" onclick="toggleTheme()" id="themeBtn" title="الوضع الداكن/الفاتح">
+      <svg viewBox="0 0 24 24" id="themeIcon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <a href="login.html" class="btn-nav" id="btn-login">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/>
+      </svg>
+      <span id="txt-login">تسجيل الدخول</span>
+    </a>
+  </div>
+</nav>
+
+<section class="hero">
+  <video autoplay muted playsinline id="heroVideo" class="hero-video-bg">
+    <source src="assets/images/intro.mov" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-cards">
+      <a href="#" onclick="openModal('aboutModal');return false;" class="hcard">
+        <div class="hcard-arrow">←</div>
+        <div class="hcard-info">
+          <div class="hcard-label" id="hl-about-lbl">من نحن</div>
+          <div class="hcard-title" id="hl-about-ttl">  </div>
+        </div>
+      </a>
+      <a href="#" onclick="openModal('missionModal');return false;" class="hcard">
+        <div class="hcard-arrow">←</div>
+        <div class="hcard-info">
+          <div class="hcard-label" id="hl-mission-lbl">رسالتنا ورؤيتنا</div>
+          <div class="hcard-title" id="hl-mission-ttl"></div>
+        </div>
+      </a>
+    </div>
+    <div class="hero-text">
+      <h1 class="hero-title" id="hero-main-title">
+        إدارة <span class="accent">الخدمات الصحية</span>
+        
+      </h1>
+      <p class="hero-desc" id="hero-main-desc">
+        المنصة التنفيذية الموحدة للإشراف على مسارات الرعاية الصحية، حوكمة مؤشرات
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="sec white" id="ann">
+  <div class="sec-in rv">
+    <div class="sec-hd">
+      <div>
+        <div class="sec-title-line">
+          <div class="sec-mark"></div>
+          <h2 class="sec-title" id="ann-sec-title">الإعلانات و <span class="hi">الأخبار التنفيذية</span></h2>
+        </div>
+        <p class="sec-sub" id="ann-sec-sub">آخر مستجدات إدارة الخدمات الصحية</p>
+      </div>
+      <div class="see-all" id="ann-see-all" onclick="openSeeAll('ann')">← <span id="txt-see-all-ann">عرض الكل</span></div>
+    </div>
+    <div class="ann-grid" id="ann-grid-home">
+      <!-- يتم تحميل الإعلانات ديناميكياً من لوحة إدارة المحتوى -->
+    </div>
+  </div>
+</section>
+
+<section class="sec gray" id="org">
+  <div class="sec-in rv">
+    <div class="sec-hd">
+      <div>
+        <div class="sec-title-line">
+          <div class="sec-mark"></div>
+          <h2 class="sec-title" id="org-sec-title">الهيكل <span class="hi">التنظيمي</span> للإدارة</h2>
+        </div>
+        <p class="sec-sub" id="org-sec-sub">هيكل حوكمة الأداء والمسارات الطبية والتشغيلية بالخدمات الصحية</p>
+      </div>
+    </div>
+
+    <!-- الجذر -->
+    <div class="org-tree">
+      <div class="org-root">
+        <div class="org-root-title" id="org-root-title">الخدمات الصحية</div>
+        <div class="org-root-en" id="org-root-en">Health Services</div>
+      </div>
+      <div class="org-vl"></div>
+      <div class="org-hl-wrap">
+        <div class="org-hl"></div>
+        <div class="org-lv1-col">
+          <div class="org-vl"></div>
+          <div class="org-lv1-node">
+            <div class="org-lv1-title" id="sup1-title">مدير المكتب</div>
+            <div class="org-lv1-en" id="sup1-en">Executive Office Manager</div>
+          </div>
+        </div>
+        <div class="org-lv1-col">
+          <div class="org-vl"></div>
+          <div class="org-lv1-node">
+            <div class="org-lv1-title" id="sup2-title">وحدة تقييم الخدمات الطبية</div>
+            <div class="org-lv1-en" id="sup2-en">Medical Services Evaluation Unit</div>
+          </div>
+        </div>
+        <div class="org-lv1-col">
+          <div class="org-vl"></div>
+          <div class="org-lv1-node">
+            <div class="org-lv1-title" id="sup3-title">الخدمات الإلكترونية</div>
+            <div class="org-lv1-en" id="sup3-en">Electronic Medical Services</div>
+          </div>
+        </div>
+        <div class="org-lv1-col">
+          <div class="org-vl"></div>
+          <div class="org-lv1-node">
+            <div class="org-lv1-title" id="sup4-title">إدارة التعاقد المؤقت والأطباء الزائرين</div>
+            <div class="org-lv1-en" id="sup4-en">Temporary Contracting & Visiting Physicians</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- المسارات الرئيسية -->
+    <div class="dept-cards-wrap" id="dept-cards-wrap">
+      <!-- يتم البناء ديناميكياً من DEPT_DATA -->
+    </div>
+  </div>
+</section>
+
+<section class="sec white" id="awards">
+  <div class="sec-in rv">
+    <div class="sec-hd">
+      <div>
+        <div class="sec-title-line">
+          <div class="sec-mark" style="background:#c9a227"></div>
+          <h2 class="sec-title" id="awards-sec-title">جوائز و<span class="hi" style="color:#c9a227">إنجازات الإدارة</span></h2>
+        </div>
+        <p class="sec-sub" id="awards-sec-sub">الجوائز والشهادات التي حققتها إدارة الخدمات الصحية</p>
+      </div>
+      <div class="see-all" style="color:#c9a227" id="awards-see-all" onclick="openSeeAll('awards')">← <span id="txt-see-all-awards">عرض الكل</span></div>
+    </div>
+    <div class="ann-grid" id="awards-grid-home">
+      <!-- يتم تحميل الجوائز ديناميكياً من لوحة إدارة المحتوى -->
+    </div>
+  </div>
+</section>
+
+<!-- Modals -->
+<div class="modal-overlay" id="annModal" onclick="closeModal('annModal')">
+  <div class="modal-container" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">أرشيف الإعلانات والأخبار التنفيذية بالكامل</div>
+      <button class="modal-close" onclick="closeModal('annModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="color:var(--mu); font-size:14px; text-align:center; margin:40px 0;"> شاشة الأرشيف الرقمي الموحد جاهزة ومربوطة؛ وسيتم سحب وجدولة كافة الأخبار السابقة والتاريخية تلقائياً فور ربط قاعدة البيانات الخاصة بلوحة المدير.</p>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="awardsModal" onclick="closeModal('awardsModal')">
+  <div class="modal-container" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" style="color:#c9a227">سجل الإنجازات والشهادات المعتمدة</div>
+      <button class="modal-close" style="color:#c9a227" onclick="closeModal('awardsModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="color:var(--mu); font-size:14px; text-align:center; margin:40px 0;">🏆 شاشة لوحة الشرف والاعتمادات الرسمية جاهزة ومجهزة بالكامل؛ لاستعراض شهادات الاعتماد والتميز المؤسسي للإدارة مستقبلاً.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="aboutModal" onclick="closeModal('aboutModal')">
+  <div class="modal-container" onclick="event.stopPropagation()" style="max-width:600px">
+    <div class="modal-header">
+      <div class="modal-title" id="about-modal-title">من نحن</div>
+      <button class="modal-close" onclick="closeModal('aboutModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="about-modal-text" style="color:var(--tx); font-size:14.5px; line-height:2; text-align:right;">
+        إدارة الخدمات الصحية بتجمع حائل الصحي هي الجهة المسؤولة عن حوكمة الأداء وتطوير الخدمات الصحية بجميع المرافق الصحية في منطقة حائل، وتشمل إشرافها 8 مسارات رئيسية وأكثر من 60 تخصصاً طبياً، بهدف ضمان جودة الرعاية الصحية المقدمة لمستفيدي المنطقة وفق أعلى المعايير الوطنية.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="missionModal" onclick="closeModal('missionModal')">
+  <div class="modal-container" onclick="event.stopPropagation()" style="max-width:600px">
+    <div class="modal-header">
+      <div class="modal-title" id="mission-modal-title">رسالتنا ورؤيتنا</div>
+      <button class="modal-close" onclick="closeModal('missionModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="margin-bottom:20px;">
+        <div style="font-size:13px; font-weight:800; color:var(--pr); margin-bottom:6px;" id="about-mission-lbl">رسالتنا</div>
+        <p id="about-mission-text" style="color:var(--mu); font-size:14px; line-height:1.95; text-align:right;">تقديم رعاية صحية متكاملة وآمنة لسكان منطقة حائل من خلال حوكمة فعّالة لمؤشرات الأداء وتطوير مستمر للخدمات الصحية.</p>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:800; color:var(--pr); margin-bottom:6px;" id="about-vision-lbl">رؤيتنا</div>
+        <p id="about-vision-text" style="color:var(--mu); font-size:14px; line-height:1.95; text-align:right;">أن نكون نموذجاً رائداً في التميز التشغيلي والإكلينيكي، يحقق أهداف رؤية المملكة 2030 في القطاع الصحي.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-top">
+    <div class="ft-brand">
+      <img src="assets/images/hcslogo.png" alt="Logo"/>
+      <div>
+        <div class="ft-brand-ar" id="ft-brand-ar">إدارة الخدمات الصحية تجمع حائل الصحي</div>
+        <div class="ft-brand-en" id="ft-brand-en">Health Services Management Portal</div>
+      </div>
+    </div>
+    <div class="ft-links">
+      <a href="#" id="ft-lnk-home">الرئيسية</a>
+      <a href="#ann" id="ft-lnk-ann">الإعلانات</a>
+      <a href="#org" id="ft-lnk-org">الهيكل التنظيمي</a>
+      <a href="login.html" id="ft-lnk-login">تسجيل الدخول</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy" id="ft-copy">إدارة الخدمات الصحية تجمع حائل — جميع الحقوق محفوظة © 2026</div>
+    <div class="ft-developer">
+      <span id="ft-dev-label">تم تطويره بواسطة :</span>
+      <span class="dev-name" id="dev-name-main">م. أمجاد الأحمري</span>
+</div><!-- /#mainContent -->
+
+<script>
+/* ══ الدوال الأساسية للصفحة ══ */
+function toggleAcc(el) { el.classList.toggle('open'); }
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10));
+const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('on') }), { threshold: .07 });
+document.querySelectorAll('.rv').forEach(r => obs.observe(r));
+function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = 'auto'; }
+
+/* ══ عرض الكل — SPA navigation ══ */
+function openSeeAll(section) {
+  document.getElementById('mainContent').style.display = 'none';
+  document.getElementById('annPage').style.display   = 'none';
+  document.getElementById('awardsPage').style.display = 'none';
+  const target = section === 'ann' ? 'annPage' : 'awardsPage';
+  document.getElementById(target).style.display = 'block';
+  window.scrollTo({ top: 0 });
+}
+function goHome() {
+  document.getElementById('mainContent').style.display = 'block';
+  document.getElementById('annPage').style.display   = 'none';
+  document.getElementById('awardsPage').style.display = 'none';
+  window.scrollTo({ top: 0 });
+}
+
+/* ══ موجات الخلفية ══ */
+const canvas = document.getElementById('waveCanvas');
+const ctx = canvas.getContext('2d');
+let progress = 0;
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize); resize();
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = '#1A6CC8'; ctx.globalAlpha = 0.35; ctx.lineWidth = 2.0;
+  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  for (let i = 0; i < 18; i++) {
+    ctx.beginPath();
+    const offset = (i - 9) * 8.0;
+    const phase = progress * 2 * Math.PI + (i * 0.05);
+    ctx.moveTo(0, canvas.height * 0.50 + offset);
+    for (let x = 0; x <= canvas.width; x += 10) {
+      const ratio = x / canvas.width;
+      const y = canvas.height * 0.50 + Math.sin(ratio * Math.PI * 2 + phase) * 90 + Math.cos(ratio * Math.PI * 3 - phase * 1.5) * 45 + offset;
+      ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  progress += 0.0012;
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+
+/* ══ تتابع الفيديو ══ */
+const videoPlayer = document.getElementById('heroVideo');
+const videoSources = ["assets/images/intro.mov", "assets/images/net.mov"];
+let currentVideoIndex = 0;
+if (videoPlayer) {
+  videoPlayer.addEventListener('ended', function () {
+    currentVideoIndex = (currentVideoIndex + 1) % videoSources.length;
+    videoPlayer.src = videoSources[currentVideoIndex];
+    videoPlayer.play();
+  });
+}
+
+/* ══ الوضع الداكن ══ */
+/* ══ ملء الشاشة ══ */
+function toggleFullscreen() {
+  const icon = document.getElementById('fullscreenIcon');
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => {});
+  } else {
+    document.exitFullscreen().catch(() => {});
+  }
+}
+document.addEventListener('fullscreenchange', () => {
+  const icon = document.getElementById('fullscreenIcon');
+  if (!icon) return;
+  if (document.fullscreenElement) {
+    icon.innerHTML = '<path d="M9 9H5V5m0 4l5-5M15 9h4V5m0 4l-5-5M9 15H5v4m0-4l5 5M15 15h4v4m0-4l-5 5"/>';
+  } else {
+    icon.innerHTML = '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';
+  }
+});
+
+function toggleTheme() {
+  const html = document.getElementById('mainHtml');
+  const icon = document.getElementById('themeIcon');
+  if (html.getAttribute('data-theme') === 'dark') {
+    html.removeAttribute('data-theme');
+    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+    localStorage.setItem('theme', 'light');
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    icon.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+    localStorage.setItem('theme', 'dark');
+  }
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.getElementById('mainHtml').setAttribute('data-theme', 'dark');
+  document.getElementById('themeIcon').innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+}
+
+/* ══ بيانات الهيكل التنظيمي — ثنائي اللغة ══ */
+const DEPT_DATA = {
+  ar: [
+    { name:'مسار الخدمات الإكلينيكية والجراحة', en:'Service Lines & Surgery', badge:'31 تخصص',
+      tags:['التخدير','الكلى','طب الطوارئ','الرعاية المديدة','الروماتيزم','جراحة المخ والأعصاب','الأعصاب','الأنف والأذن والحنجرة','الصدرية','المسالك البولية','الرعاية العاجلة','السمعيات','علم الأمراض','الأطفال','العناية المركزة للأطفال','التأهيل الطبي','الباطنة','الجراحة العامة','الجهاز الهضمي','الأورام','العيون','العظام','العناية المركزة كبار','الطب النفسي','الغدد الصماء والسكر','طب الأسرة','الأسنان','النساء والولادة','الجلدية','القلب','حديثي الولادة'] },
+    { name:'الخدمات الصحية المساندة', en:'Allied Health', badge:'9 أقسام',
+      tags:['الرعاية الصيدلانية','الأشعة','المختبرات','الخدمة الاجتماعية','العلاج التنفسي','العمليات الجراحية','التغذية العلاجية','البصريات','العلاج الطبيعي'] },
+    { name:'التمريض', en:'Nursing', badge:'6 إدارات',
+      tags:['إدارة الخدمات التمريضية','تمريض الرعاية الأولية','الأبحاث التمريضية','التخطيط والتميز','عمليات التمريض','وحدة الدعم ورعاية الموظفين'] },
+    { name:'الصحة العامة والمجتمعية', en:'Public & Community Health', badge:'7 إدارات',
+      tags:['شؤون المراكز الصحية','مكافحة الأمراض المعدية ونواقل المرض','البرامج الصحية والأمراض المزمنة','صحة البيئة والصحة المهنية','مكافحة العدوى','التثقيف الإكلينيكي','الحماية من الإشعاع'] },
+    { name:'نموذج الرعاية الصحية', en:'Model of Care', badge:'11 وحدة',
+      tags:['إدارة المشاريع','قائد نظام الأمراض المزمنة','قائد نظام الرعاية العاجلة','قائد نظام الرعاية التلطيفية','قائد نظام الرعاية الوقائية','قائد نظام الرعاية المخططة','قائد نظام رعاية الأم والطفل','مسؤول الأبحاث','مسؤول الجودة','مسؤول الإحالة','مسؤول برنامج طبيب لكل أسرة'] },
+    { name:'الأداء الإكلينيكي', en:'Clinical Performance Management', badge:'4 أقسام',
+      tags:['حوكمة المؤشرات','تحليل البيانات والتقارير','جودة البيانات والاعتماد','المشاريع وإدارة المنافع'] },
+    { name:'الصحة السكانية', en:'Population Health Management', badge:'3 أقسام',
+      tags:['ذكاء وتحليلات صحة السكان','برامج وتدخلات صحة السكان','بيانات وسجلات صحة السكان'] }
+  ],
+  en: [
+    { name:'Service Lines & Surgery', en:'SERVICE LINES & SURGERY', badge:'31 Specialties',
+      tags:['Anesthesia','Nephrology','Emergency Medicine','Long Term Care','Rheumatology','Neurosurgery','Neurology','ENT','Pulmonology','Urology','Urgent Care','Audiology','Pathology','Pediatrics','Pediatric ICU','Rehabilitation','Internal Medicine','General Surgery','Gastroenterology','Oncology','Ophthalmology','Orthopedics','Adult ICU','Psychiatry','Endocrinology','Family Medicine','Dentistry','Obstetrics & Gynecology','Dermatology','Cardiology','Neonatology'] },
+    { name:'Allied Health', en:'ALLIED HEALTH', badge:'9 Departments',
+      tags:['Pharmacy Care','Radiology','Laboratory','Clinical Social Services','Respiratory Therapy','Surgical Operations','Clinical Nutrition','Optics','Physiotherapy'] },
+    { name:'Nursing', en:'NURSING', badge:'6 Divisions',
+      tags:['Nursing Services Management','PHC Nursing','Nursing Research','Planning & Excellence','Nursing Operations','Employee Support Unit'] },
+    { name:'Public & Community Health', en:'PUBLIC HEALTH', badge:'7 Divisions',
+      tags:['Primary Care Centers','Communicable Diseases & Vector Control','Health Programs & Chronic Diseases','Environmental & Occupational Health','Infection Prevention','Clinical Education','Radiation Protection'] },
+    { name:'Model of Care', en:'MODEL OF CARE', badge:'11 Units',
+      tags:['Project Management','Chronic Disease Program Leader','Urgent Care Program Leader','Palliative Care Program Leader','Preventive Care Program Leader','Planned Care Program Leader','Mother & Child Care Program Leader','Research Officer','Quality Officer','Referral Officer','Family Doctor Program Officer'] },
+    { name:'Clinical Performance Management', en:'CLINICAL PERFORMANCE', badge:'4 Departments',
+      tags:['Indicators Governance','Data Analysis & Reports','Data Quality & Accreditation','Projects & Benefits Management'] },
+    { name:'Population Health Management', en:'POPULATION HEALTH', badge:'3 Departments',
+      tags:['Population Health Intelligence & Analytics','Population Health Programs & Interventions','Population Health Data & Registries'] }
+  ]
+};
+
+function renderDepts(lang) {
+  const wrap = document.getElementById('dept-cards-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = DEPT_DATA[lang].map(d => `
+    <div class="dept-card-new">
+      <div class="dept-card-head">
+        <div class="dept-card-name">${d.name}</div>
+        <div class="dept-card-en">${d.en}</div>
+        <div class="dept-card-badge">${d.badge}</div>
+      </div>
+      <div class="dept-card-body">
+        ${d.tags.map(t => `<span class="dept-tag-new">${t}</span>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+// بناء أولي عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', () => renderDepts('ar'));
+
+/* ══ تبديل اللغة الكامل ══ */
+let currentLang = 'ar';
+function toggleLanguage() {
+  const html = document.getElementById('mainHtml');
+  if (currentLang === 'ar') {
+    html.setAttribute('dir','ltr'); html.setAttribute('lang','en'); currentLang='en';
+    /* Navbar */
+    document.getElementById('lnk-ann').innerText        = "Announcements";
+    document.getElementById('lnk-org').innerText        = "Organizational Structure";
+    document.getElementById('lnk-awards').innerText     = "Awards";
+    document.getElementById('lnk-about').innerText      = "About Portal";
+    document.getElementById('txt-login').innerText      = "Login";
+    /* Hero cards */
+    document.getElementById('hero-main-title').innerHTML = 'Integrated <span class="accent">Health Services</span> Management Authority';
+    document.getElementById('hero-main-desc').innerText  = "The unified executive platform for supervising health care pathways, governing clinical performance indicators, and developing the operational model for medical facilities in the Hail region.";
+    document.getElementById('hl-about-lbl').innerText   = "About Us";
+    document.getElementById('hl-about-ttl').innerText   = "The authority overseeing clinical pathway governance and performance development — 8 health pathways and 60+ medical specialties.";
+    document.getElementById('hl-mission-lbl').innerText = "Mission & Vision";
+    document.getElementById('hl-mission-ttl').innerText = "Integrated healthcare for Hail region's population through effective performance governance and continuous development aligned with the highest national standards.";
+    const amt = document.getElementById('about-modal-title'); if(amt) amt.innerText = "About Us";
+    const amx = document.getElementById('about-modal-text');  if(amx) amx.innerText = "Health Services Management at Hail Health Cluster is responsible for governing performance and developing health services across all health facilities in Hail region, overseeing 8 main pathways and over 60 medical specialties, ensuring the quality of healthcare provided to beneficiaries in line with the highest national standards.";
+    const mmt = document.getElementById('mission-modal-title'); if(mmt) mmt.innerText = "Mission & Vision";
+    const aml = document.getElementById('about-mission-lbl'); if(aml) aml.innerText = "Our Mission";
+    const amtx = document.getElementById('about-mission-text'); if(amtx) amtx.innerText = "Providing integrated and safe healthcare for the population of Hail region through effective performance governance and continuous development of health services.";
+    const avl = document.getElementById('about-vision-lbl'); if(avl) avl.innerText = "Our Vision";
+    const avtx = document.getElementById('about-vision-text'); if(avtx) avtx.innerText = "To be a leading model in operational and clinical excellence, achieving Saudi Vision 2030 goals in the health sector.";
+    /* Announcements section */
+    document.getElementById('ann-sec-title').innerHTML  = 'Announcements & <span class="hi">Executive News</span>';
+    document.getElementById('ann-sec-sub').innerText    = "Latest updates from Health Services Management";
+    document.getElementById('txt-see-all-ann').innerText = "See All";
+    /* Org section */
+    document.getElementById('org-sec-title').innerHTML  = 'Organizational <span class="hi">Structure</span>';
+    document.getElementById('org-sec-sub').innerText    = "Governance structure for performance, clinical pathways and operations";
+    document.getElementById('org-root-title').innerText = "Health Services";
+    document.getElementById('org-root-en').innerText    = "HEALTH SERVICES";
+    document.getElementById('sup1-title').innerText     = "Office Manager";
+    document.getElementById('sup1-en').innerText        = "Executive Office Manager";
+    document.getElementById('sup2-title').innerText     = "Services Evaluation Unit";
+    document.getElementById('sup2-en').innerText        = "Medical Services Evaluation Unit";
+    document.getElementById('sup3-title').innerText     = "Electronic Services";
+    document.getElementById('sup3-en').innerText        = "Electronic Medical Services";
+    document.getElementById('sup4-title').innerText     = "Temporary Contracting";
+    document.getElementById('sup4-en').innerText        = "Temporary Contracting & Visiting Physicians";
+    renderDepts('en');
+    /* Awards section */
+    document.getElementById('awards-sec-title').innerHTML = 'Awards & <span class="hi" style="color:#c9a227">Achievements</span>';
+    document.getElementById('awards-sec-sub').innerText   = "Awards and certificates achieved by Health Services Management";
+    document.getElementById('txt-see-all-awards').innerText = "See All";
+    /* Footer */
+    document.getElementById('ft-brand-ar').innerText    = "Health Services Management — Hail Health Cluster";
+    document.getElementById('ft-brand-en').innerText    = "Hail Health Cluster Portal";
+    document.getElementById('ft-lnk-home').innerText    = "Home";
+    document.getElementById('ft-lnk-ann').innerText     = "Announcements";
+    document.getElementById('ft-lnk-org').innerText     = "Organizational Structure";
+    document.getElementById('ft-lnk-login').innerText   = "Login";
+    document.getElementById('ft-copy').innerText        = "Health Services Management — Hail Cluster © 2026. All Rights Reserved.";
+    document.getElementById('ft-dev-label').innerText   = "Developed by:";
+    ['dev-name-main','dev-name-ann','dev-name-awd'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerText='ENG.Amjad Alahmari';});
+    /* Ann & Awards pages */
+    const ap = document.getElementById('ann-page-title'); if(ap) ap.innerText = 'Executive Announcements & News';
+    const as = document.getElementById('ann-page-sub');   if(as) as.innerText = 'All announcements and news from Health Services Management — Hail Health Cluster';
+    const awp = document.getElementById('awd-page-title'); if(awp) awp.innerText = 'Awards & Achievements';
+    const aws = document.getElementById('awd-page-sub');   if(aws) aws.innerText = 'Record of awards and certificates achieved by Health Services Management';
+    const anf = document.getElementById('ann-footer-name'); if(anf) anf.innerText = 'Health Services Management';
+    const awf = document.getElementById('awd-footer-name'); if(awf) awf.innerText = 'Health Services Management';
+    const ann = document.getElementById('ann-nav-name'); if(ann) ann.innerText = 'Health Services Management';
+    const awe = document.getElementById('ann-nav-en');   if(awe) awe.innerText = 'Hail Health Cluster';
+    const awn = document.getElementById('awd-nav-name'); if(awn) awn.innerText = 'Health Services Management';
+    const awen= document.getElementById('awd-nav-en');   if(awen) awen.innerText = 'Hail Health Cluster';
+    const abt = document.getElementById('ann-back-txt'); if(abt) abt.innerText = 'Back to Home';
+    const wbt = document.getElementById('awd-back-txt'); if(wbt) wbt.innerText = 'Back to Home';
+    ['ann-ft-home','awd-ft-home'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerText='Home';});
+    const afa=document.getElementById('ann-ft-awards'); if(afa) afa.innerText='Awards & Achievements';
+    const afan=document.getElementById('awd-ft-ann');   if(afan) afan.innerText='Announcements & News';
+    ['ann-ft-login','awd-ft-login'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerText='Login';});
+    ['ann-ft-copy','awd-ft-copy'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerText='© 2026 All Rights Reserved';});
+    ['ann-ft-dev','awd-ft-dev'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerText='Developed by';});
+    renderContent();
+  } else {
+    html.setAttribute('dir','rtl'); html.setAttribute('lang','ar'); currentLang='ar';
+    /* Navbar */
+    document.getElementById('lnk-ann').innerText        = "الإعلانات";
+    document.getElementById('lnk-org').innerText        = "الهيكل التنظيمي";
+    document.getElementById('lnk-awards').innerText     = "الجوائز";
+    document.getElementById('lnk-about').innerText      = "عن المنصة";
+    document.getElementById('txt-login').innerText      = "تسجيل الدخول";
+    /* Hero cards */
+    document.getElementById('hero-main-title').innerHTML = 'إدارة <span class="accent">الخدمات الصحية</span> المتكاملة';
+    document.getElementById('hero-main-desc').innerText  = "المنصة التنفيذية الموحدة للإشراف على مسارات الرعاية الصحية، حوكمة مؤشرات الأداء الإكلينيكي، وتطوير النموذج التشغيلي للمنشآت الطبية بمنطقة حائل.";
+    document.getElementById('hl-about-lbl').innerText   = "من نحن";
+    document.getElementById('hl-about-ttl').innerText   = "الجهة المشرفة على حوكمة المسارات الطبية وتطوير الأداء الإكلينيكي — 8 مسارات وأكثر من 60 تخصصاً";
+    document.getElementById('hl-mission-lbl').innerText = "رسالتنا ورؤيتنا";
+    document.getElementById('hl-mission-ttl').innerText = "رعاية صحية متكاملة لسكان منطقة حائل من خلال حوكمة فعّالة وتطوير مستمر وفق أعلى المعايير الوطنية";
+    const amt2 = document.getElementById('about-modal-title'); if(amt2) amt2.innerText = "من نحن";
+    const mmt2 = document.getElementById('mission-modal-title'); if(mmt2) mmt2.innerText = "رسالتنا ورؤيتنا";
+    const amx2 = document.getElementById('about-modal-text');  if(amx2) amx2.innerText = "إدارة الخدمات الصحية بتجمع حائل الصحي هي الجهة المسؤولة عن حوكمة الأداء وتطوير الخدمات الصحية بجميع المرافق الصحية في منطقة حائل، وتشمل إشرافها 8 مسارات رئيسية وأكثر من 60 تخصصاً طبياً، بهدف ضمان جودة الرعاية الصحية المقدمة لمستفيدي المنطقة وفق أعلى المعايير الوطنية.";
+    const aml2 = document.getElementById('about-mission-lbl'); if(aml2) aml2.innerText = "رسالتنا";
+    const amtx2 = document.getElementById('about-mission-text'); if(amtx2) amtx2.innerText = "تقديم رعاية صحية متكاملة وآمنة لسكان منطقة حائل من خلال حوكمة فعّالة لمؤشرات الأداء وتطوير مستمر للخدمات الصحية.";
+    const avl2 = document.getElementById('about-vision-lbl'); if(avl2) avl2.innerText = "رؤيتنا";
+    const avtx2 = document.getElementById('about-vision-text'); if(avtx2) avtx2.innerText = "أن نكون نموذجاً رائداً في التميز التشغيلي والإكلينيكي، يحقق أهداف رؤية المملكة 2030 في القطاع الصحي.";
+    /* Announcements section */
+    document.getElementById('ann-sec-title').innerHTML  = 'الإعلانات و <span class="hi">الأخبار التنفيذية</span>';
+    document.getElementById('ann-sec-sub').innerText    = "آخر مستجدات إدارة الخدمات الصحية";
+    document.getElementById('txt-see-all-ann').innerText = "عرض الكل";
+    /* Org section */
+    document.getElementById('org-sec-title').innerHTML  = 'الهيكل <span class="hi">التنظيمي</span> للإدارة';
+    document.getElementById('org-sec-sub').innerText    = "هيكل حوكمة الأداء والمسارات الطبية والتشغيلية بالخدمات الصحية";
+    document.getElementById('org-root-title').innerText = "الخدمات الصحية";
+    document.getElementById('org-root-en').innerText    = "Health Services";
+    document.getElementById('sup1-title').innerText     = "مدير المكتب";
+    document.getElementById('sup1-en').innerText        = "Executive Office Manager";
+    document.getElementById('sup2-title').innerText     = "وحدة تقييم الخدمات الطبية";
+    document.getElementById('sup2-en').innerText        = "Medical Services Evaluation Unit";
+    document.getElementById('sup3-title').innerText     = "الخدمات الإلكترونية";
+    document.getElementById('sup3-en').innerText        = "Electronic Medical Services";
+    document.getElementById('sup4-title').innerText     = "إدارة التعاقد المؤقت والأطباء الزائرين";
+    document.getElementById('sup4-en').innerText        = "Temporary Contracting & Visiting Physicians";
+    renderDepts('ar');
+    /* Awards section */
+    document.getElementById('awards-sec-title').innerHTML = 'جوائز و<span class="hi" style="color:#c9a227">إنجازات الإدارة</span>';
+    document.getElementById('awards-sec-sub').innerText   = "الجوائز والشهادات التي حققتها إدارة الخدمات الصحية";
+    document.getElementById('txt-see-all-awards').innerText = "عرض الكل";
+    /* Footer */
+    document.getElementById('ft-brand-ar').innerText    = "إدارة الخدمات الصحية تجمع حائل الصحي";
+    document.getElementById('ft-brand-en').innerText    = "Health Services Management Portal";
+    document.getElementById('ft-lnk-home').innerText    = "الرئيسية";
+    document.getElementById('ft-lnk-ann').innerText     = "الإعلانات";
+    document.getElementById('ft-lnk-org').innerText     = "الهيكل التنظيمي";
+    document.getElementById('ft-lnk-login').innerText   = "تسجيل الدخول";
+    document.getElementById('ft-copy').innerText        = "إدارة الخدمات الصحية تجمع حائل — جميع الحقوق محفوظة © 2026";
+    document.getElementById('ft-dev-label').innerText   = "تم تطويره بواسطة :";
+    ['dev-name-main','dev-name-ann','dev-name-awd'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerText='م. أمجاد الأحمري';});
+    /* Ann & Awards pages */
+    const ap = document.getElementById('ann-page-title'); if(ap) ap.innerText = 'الإعلانات والأخبار التنفيذية';
+    const as = document.getElementById('ann-page-sub');   if(as) as.innerText = 'جميع إعلانات وأخبار إدارة الخدمات الصحية — تجمع حائل الصحي';
+    const awp = document.getElementById('awd-page-title'); if(awp) awp.innerText = 'جوائز وإنجازات الإدارة';
+    const aws = document.getElementById('awd-page-sub');   if(aws) aws.innerText = 'سجل الجوائز والشهادات التي حققتها إدارة الخدمات الصحية — تجمع حائل الصحي';
+    const anf = document.getElementById('ann-footer-name'); if(anf) anf.innerText = 'إدارة الخدمات الصحية';
+    const awf = document.getElementById('awd-footer-name'); if(awf) awf.innerText = 'إدارة الخدمات الصحية';
+    const ann = document.getElementById('ann-nav-name'); if(ann) ann.innerText = 'إدارة الخدمات الصحية';
+    const awe = document.getElementById('ann-nav-en');   if(awe) awe.innerText = 'Health Services Management';
+    const awn = document.getElementById('awd-nav-name'); if(awn) awn.innerText = 'إدارة الخدمات الصحية';
+    const awen= document.getElementById('awd-nav-en');   if(awen) awen.innerText = 'Health Services Management';
+    const abt = document.getElementById('ann-back-txt'); if(abt) abt.innerText = 'العودة للرئيسية';
+    const wbt = document.getElementById('awd-back-txt'); if(wbt) wbt.innerText = 'العودة للرئيسية';
+    ['ann-ft-home','awd-ft-home'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerText='الرئيسية';});
+    const afa=document.getElementById('ann-ft-awards'); if(afa) afa.innerText='الجوائز والإنجازات';
+    const afan=document.getElementById('awd-ft-ann');   if(afan) afan.innerText='الإعلانات والأخبار';
+    ['ann-ft-login','awd-ft-login'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerText='تسجيل الدخول';});
+    ['ann-ft-copy','awd-ft-copy'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerText='© 2026 جميع الحقوق محفوظة';});
+    ['ann-ft-dev','awd-ft-dev'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerText='تم التطوير بواسطة';});
+    renderContent();
+  }
+}
+</script>
+
+<style>
+/* ══ SUB-PAGE STYLES ══ */
+#annPage, #awardsPage { display:none; font-family:'Tajawal',sans-serif; min-height:100vh; background:#f4f7fb; }
+[data-theme="dark"] #annPage, [data-theme="dark"] #awardsPage { background:#0f172a; }
+
+/* ── Sub-page hero header ── */
+.sp-hero {
+  position: relative; overflow: hidden;
+  padding: 0;
+}
+.sp-hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(135deg, #0b1538 0%, var(--pr) 60%, #1A6CC8 100%);
+}
+.sp-hero-bg.gold {
+  background: linear-gradient(135deg, #3a2800 0%, #8a6200 50%, #c9a227 100%);
+}
+.sp-hero-pattern {
+  position: absolute; inset: 0; z-index: 1; opacity: .07;
+  background-image: radial-gradient(circle at 20% 50%, #fff 1px, transparent 1px),
+                    radial-gradient(circle at 80% 20%, #fff 1px, transparent 1px),
+                    radial-gradient(circle at 50% 80%, #fff 1px, transparent 1px);
+  background-size: 60px 60px, 80px 80px, 50px 50px;
+}
+.sp-hero-glow {
+  position: absolute; right: -80px; top: -80px; z-index: 1;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.12) 0%, transparent 70%);
+}
+.sp-hero-content {
+  position: relative; z-index: 2;
+  max-width: 1240px; margin: 0 auto;
+  padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 80px;
+}
+/* مسافة فوق الـ hero لحساب الـ navbar الثابت */
+#annPage .sp-hero,
+#awardsPage .sp-hero {
+  padding-top: 68px;
+}
+.sp-nav-brand { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.sp-nav-brand img { height:40px; width:auto; object-fit:contain; filter:brightness(0) invert(1); }
+.sp-nav-brand-text { display:flex; flex-direction:column; }
+.sp-nav-brand-ar { font-size:14px; font-weight:800; color:#fff; line-height:1.3; }
+.sp-nav-brand-en { font-size:10px; color:rgba(255,255,255,.55); font-weight:500; }
+.sp-back-btn {
+  display:flex; align-items:center; gap:8px;
+  color:#fff; text-decoration:none; font-size:13px; font-weight:700;
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
+  padding:9px 20px; border-radius:10px; cursor:pointer;
+  transition:all .2s; white-space:nowrap;
+}
+.sp-back-btn:hover { background:rgba(255,255,255,.25); transform:translateX(3px); }
+html[dir="ltr"] .sp-back-btn:hover { transform:translateX(-3px); }
+
+/* ── Hero banner ── */
+.sp-banner {
+  position: relative; overflow:hidden;
+  padding: 44px 48px 48px;
+}
+.sp-banner-bg { position:absolute; inset:0; z-index:0; }
+.sp-banner-bg.blue { background:linear-gradient(135deg,#0b1538 0%,var(--pr) 55%,#1A6CC8 100%); }
+.sp-banner-bg.gold { background:linear-gradient(135deg,#3a2800 0%,#8a6200 50%,#c9a227 100%); }
+.sp-banner-pattern {
+  position:absolute; inset:0; z-index:1; opacity:.05;
+  background: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%);
+  background-size: 20px 20px;
+}
+.sp-banner-content { position:relative; z-index:2; max-width:1240px; margin:0 auto; display:flex; align-items:center; gap:24px; }
+.sp-banner-icon {
+  width:72px; height:72px; border-radius:18px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:36px;
+  background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.2);
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}
+.sp-banner-text { flex:1; }
+.sp-banner-label { font-size:11px; font-weight:700; color:rgba(255,255,255,.55); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; }
+.sp-banner-title { font-size:28px; font-weight:800; color:#fff; line-height:1.2; margin-bottom:8px; }
+.sp-banner-sub { font-size:14px; color:rgba(255,255,255,.7); font-weight:500; line-height:1.6; }
+
+/* ── Content area ── */
+.sp-body { max-width:1240px; margin:0 auto; padding:40px 48px 56px; }
+.sp-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:24px; align-items:start; }
+
+/* ── Ann card ── */
+.sp-ann-card {
+  background:var(--card-bg,#fff); border:1px solid var(--bd,#dde3ed);
+  border-radius:18px; overflow:hidden; transition:box-shadow .25s,transform .2s;
+  cursor:pointer; display:flex; flex-direction:column;
+}
+.sp-ann-card:hover { box-shadow:0 10px 40px rgba(27,79,155,.14); transform:translateY(-4px); }
+.sp-ann-img { width:100%; height:200px; position:relative; overflow:hidden; background:linear-gradient(135deg,var(--nv,#1b214d),var(--pr,#1B4F9B)); flex-shrink:0; }
+.sp-ann-img img.sp-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.65; transition:transform .4s; }
+.sp-ann-card:hover .sp-bg { transform:scale(1.05); }
+.sp-ann-img .sp-logo { position:absolute; bottom:12px; right:12px; background:rgba(255,255,255,.9); border-radius:8px; padding:5px 10px; }
+.sp-ann-img .sp-logo img { height:22px; object-fit:contain; }
+.sp-ann-placeholder { width:100%; height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; background:linear-gradient(135deg,#eef2fa,#e4eaf6); flex-shrink:0; }
+.sp-ann-placeholder-icon { font-size:44px; opacity:.25; }
+.sp-ann-placeholder-txt { font-size:12px; color:var(--mu,#5a6a82); text-align:center; padding:0 20px; opacity:.6; }
+.sp-ann-body { padding:20px 22px; flex:1; display:flex; flex-direction:column; }
+.sp-ann-meta { display:flex; align-items:center; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
+.sp-ann-tag { font-size:11px; font-weight:700; padding:3px 12px; border-radius:20px; background:var(--pr-l,#E8EEF8); color:var(--pr,#1B4F9B); white-space:nowrap; }
+.sp-ann-tag.gold { background:#fdf6e3; color:#c9a227; }
+.sp-ann-date { font-size:11px; color:var(--mu,#5a6a82); }
+.sp-ann-title { font-size:16px; font-weight:800; color:var(--nv,#1b214d); margin-bottom:10px; line-height:1.6; }
+[data-theme="dark"] .sp-ann-title { color:#fff; }
+.sp-ann-desc { font-size:13.5px; color:var(--mu,#5a6a82); line-height:1.8; flex:1; }
+
+/* ── Award card ── */
+.sp-award-card {
+  background:var(--card-bg,#fff); border:1.5px solid #e8d48a;
+  border-radius:18px; overflow:hidden; transition:box-shadow .25s,transform .2s;
+  display:flex; flex-direction:column;
+}
+.sp-award-card:hover { box-shadow:0 10px 40px rgba(201,162,39,.22); transform:translateY(-4px); }
+.sp-award-img { width:100%; height:180px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:linear-gradient(135deg,#fdf6e3,#fef5d0); border-bottom:1px solid #e8d48a; flex-shrink:0; }
+.sp-award-img-icon { font-size:60px; filter:drop-shadow(0 4px 12px rgba(201,162,39,.4)); }
+.sp-award-body { padding:20px 22px; flex:1; display:flex; flex-direction:column; }
+
+/* ── Footer ── */
+.sp-footer {
+  background: var(--nv,#1b214d);
+  padding: 36px 48px;
+  margin-top: 0;
+}
+.sp-footer-inner {
+  max-width: 1240px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap;
+}
+.sp-footer-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.sp-footer-brand img {
+  height: 38px; object-fit: contain;
+  filter: brightness(0) invert(1); opacity: .85;
+}
+.sp-footer-brand-text { display: flex; flex-direction: column; }
+.sp-footer-brand-ar { font-size: 14px; font-weight: 800; color: #fff; line-height: 1.3; }
+.sp-footer-brand-en { font-size: 10px; color: rgba(255,255,255,.45); font-weight: 500; margin-top:1px; }
+.sp-footer-links-wrap { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.sp-footer-links-wrap a {
+  color: rgba(255,255,255,.6); text-decoration:none; font-size:13px; font-weight:500;
+  padding: 6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,.1);
+  transition: all .2s;
+}
+.sp-footer-links-wrap a:hover { color:#fff; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.25); }
+.sp-footer-dev {
+  font-size: 12px; color: rgba(255,255,255,.35);
+  text-align: center; margin-top: 20px; padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,.07);
+  max-width: 1240px; margin-left: auto; margin-right: auto;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.sp-footer-dev .dev-name {
+  color: #4FC3F7 !important; font-weight: 400 !important; font-size: 12px !important;
+}
+.sp-footer-copy { color: rgba(255,255,255,.3); font-size:12px; }
+</style>
+
+<!-- ══ صفحة الإعلانات الكاملة ══ -->
+<div id="annPage">
+  <!-- Nav -->
+  <div class="sp-hero">
+    <div class="sp-hero-bg"></div>
+    <div class="sp-hero-pattern"></div>
+    <div class="sp-hero-glow"></div>
+    <div class="sp-hero-content">
+      <a class="sp-nav-brand" href="#" onclick="goHome();return false;">
+        <img src="assets/images/hcslogo.png" alt="تجمع حائل الصحي"/>
+        <div class="sp-nav-brand-text">
+          <div class="sp-nav-brand-ar" id="ann-nav-name">إدارة الخدمات الصحية</div>
+          <div class="sp-nav-brand-en" id="ann-nav-en">Health Services Management</div>
+        </div>
+      </a>
+      <a class="sp-back-btn" href="#" onclick="goHome();return false;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        <span id="ann-back-txt">العودة للرئيسية</span>
+      </a>
+    </div>
+  </div>
+  <!-- Banner -->
+  <div class="sp-banner">
+    <div class="sp-banner-bg blue"></div>
+    <div class="sp-banner-pattern"></div>
+    <div class="sp-banner-content">
+      <div class="sp-banner-icon">📢</div>
+      <div class="sp-banner-text">
+        <div class="sp-banner-label">ANNOUNCEMENTS & NEWS</div>
+        <div class="sp-banner-title" id="ann-page-title">الإعلانات والأخبار التنفيذية</div>
+        <div class="sp-banner-sub" id="ann-page-sub">جميع إعلانات وأخبار إدارة الخدمات الصحية — تجمع حائل الصحي</div>
+      </div>
+    </div>
+  </div>
+  <!-- Cards -->
+  <div class="sp-body">
+    <div class="sp-grid" id="ann-grid-full"></div>
+  </div>
+  <div class="sp-footer">
+    <div class="sp-footer-inner">
+      <div class="sp-footer-brand">
+        <img src="assets/images/hcslogo.png" alt="تجمع حائل الصحي"/>
+        <div class="sp-footer-brand-text">
+          <div class="sp-footer-brand-ar" id="ann-footer-name">إدارة الخدمات الصحية</div>
+          <div class="sp-footer-brand-en">Health Services Management — Hail Cluster</div>
+        </div>
+      </div>
+      <div class="sp-footer-links-wrap">
+        <a href="#" onclick="goHome();return false;" id="ann-ft-home">الرئيسية</a>
+        <a href="#" onclick="openSeeAll('awards');return false;" id="ann-ft-awards">الجوائز والإنجازات</a>
+        <a href="login.html" id="ann-ft-login">تسجيل الدخول</a>
+      </div>
+    </div>
+    <div class="sp-footer-dev">
+      <span class="sp-footer-copy" id="ann-ft-copy">© 2026 جميع الحقوق محفوظة</span>
+      <span style="color:rgba(255,255,255,.15)">•</span>
+      <span id="ann-ft-dev">تم التطوير بواسطة</span>
+      <span class="dev-name" id="dev-name-ann">م. أمجاد الأحمري</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ صفحة الجوائز الكاملة ══ -->
+<div id="awardsPage">
+  <!-- Nav -->
+  <div class="sp-hero">
+    <div class="sp-hero-bg gold"></div>
+    <div class="sp-hero-pattern"></div>
+    <div class="sp-hero-glow"></div>
+    <div class="sp-hero-content">
+      <a class="sp-nav-brand" href="#" onclick="goHome();return false;">
+        <img src="assets/images/hcslogo.png" alt="تجمع حائل الصحي"/>
+        <div class="sp-nav-brand-text">
+          <div class="sp-nav-brand-ar" id="awd-nav-name">إدارة الخدمات الصحية</div>
+          <div class="sp-nav-brand-en" id="awd-nav-en">Health Services Management</div>
+        </div>
+      </a>
+      <a class="sp-back-btn" href="#" onclick="goHome();return false;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        <span id="awd-back-txt">العودة للرئيسية</span>
+      </a>
+    </div>
+  </div>
+  <!-- Banner -->
+  <div class="sp-banner">
+    <div class="sp-banner-bg gold"></div>
+    <div class="sp-banner-pattern"></div>
+    <div class="sp-banner-content">
+      <div class="sp-banner-icon">🏆</div>
+      <div class="sp-banner-text">
+        <div class="sp-banner-label">AWARDS & ACHIEVEMENTS</div>
+        <div class="sp-banner-title" id="awd-page-title">جوائز وإنجازات الإدارة</div>
+        <div class="sp-banner-sub" id="awd-page-sub">سجل الجوائز والشهادات التي حققتها إدارة الخدمات الصحية — تجمع حائل الصحي</div>
+      </div>
+    </div>
+  </div>
+  <!-- Cards -->
+  <div class="sp-body">
+    <div class="sp-grid" id="awards-grid-full"></div>
+  </div>
+  <div class="sp-footer">
+    <div class="sp-footer-inner">
+      <div class="sp-footer-brand">
+        <img src="assets/images/hcslogo.png" alt="تجمع حائل الصحي"/>
+        <div class="sp-footer-brand-text">
+          <div class="sp-footer-brand-ar" id="awd-footer-name">إدارة الخدمات الصحية</div>
+          <div class="sp-footer-brand-en">Health Services Management — Hail Cluster</div>
+        </div>
+      </div>
+      <div class="sp-footer-links-wrap">
+        <a href="#" onclick="goHome();return false;" id="awd-ft-home">الرئيسية</a>
+        <a href="#" onclick="openSeeAll('ann');return false;" id="awd-ft-ann">الإعلانات والأخبار</a>
+        <a href="login.html" id="awd-ft-login">تسجيل الدخول</a>
+      </div>
+    </div>
+    <div class="sp-footer-dev">
+      <span class="sp-footer-copy" id="awd-ft-copy">© 2026 جميع الحقوق محفوظة</span>
+      <span style="color:rgba(255,255,255,.15)">•</span>
+      <span id="awd-ft-dev">تم التطوير بواسطة</span>
+      <span class="dev-name" id="dev-name-awd">م. أمجاد الأحمري</span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   نظام عرض المحتوى — يجلب من قاعدة البيانات عبر API
+   عربي فقط — بدون ازدواج لغة
+════════════════════════════════════════════════════════════════ */
+
+const CONTENT_API_BASE = (window.location.protocol === 'http:' || window.location.protocol === 'https:')
+  ? `${window.location.origin}/api/content`
+  : 'http://localhost:5050/api/content';
+let ANNOUNCEMENTS = [];
+let AWARDS        = [];
+
+// ── قالب "لا يوجد محتوى بعد" ─────────────────────────────────
+function emptyState(icon, msg) {
+  return `<div style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:60px 24px;text-align:center;">
+    <div style="font-size:52px;opacity:.25;">${icon}</div>
+    <div style="font-size:14px;color:var(--mu);opacity:.7;max-width:320px;line-height:1.7;">${msg}</div>
+  </div>`;
+}
+
+// ── تنسيق التاريخ ─────────────────────────────────────
+function fmtDateAr(d) {
+  if (!d) return '';
+  const dt = new Date(d);
+  if (isNaN(dt)) return d;
+  const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  return `${dt.getDate()} ${months[dt.getMonth()]} ${dt.getFullYear()}`;
+}
+
+// ── بناء كارت إعلان (الصفحة الرئيسية) ──────────────────────
+function buildAnnCardHome(a) {
+  const imgPart = a.image_data
+    ? `<div class="ann-img-wrap"><img class="bg-img" src="${a.image_data}" alt="${a.title}"/></div>`
+    : `<div class="ann-placeholder"><div class="ann-placeholder-icon">📢</div></div>`;
+  return `<div class="ann-card">${imgPart}<div class="ann-body"><div class="ann-meta">${a.event_date?`<span class="ann-date">📅 ${fmtDateAr(a.event_date)}</span>`:''}</div><div class="ann-title">${a.title}</div>${a.description?`<div class="ann-desc">${a.description}</div>`:''}</div></div>`;
+}
+
+// ── بناء كارت إعلان (صفحة "عرض الكل") ──────────────────────
+function buildAnnCardFull(a) {
+  const imgPart = a.image_data
+    ? `<div class="sp-ann-img"><img class="sp-bg" src="${a.image_data}" alt="${a.title}"/></div>`
+    : `<div class="sp-ann-placeholder"><div class="sp-ann-placeholder-icon">📢</div></div>`;
+  return `<div class="sp-ann-card">${imgPart}<div class="sp-ann-body"><div class="sp-ann-meta">${a.event_date?`<span class="sp-ann-date">📅 ${fmtDateAr(a.event_date)}</span>`:''}</div><div class="sp-ann-title">${a.title}</div>${a.description?`<div class="sp-ann-desc">${a.description}</div>`:''}</div></div>`;
+}
+
+// ── بناء كارت جائزة (الصفحة الرئيسية) ──────────────────────
+function buildAwardCardHome(aw) {
+  const imgPart = aw.image_data
+    ? `<div class="ann-img-wrap"><img class="bg-img" src="${aw.image_data}" alt="${aw.title}"/></div>`
+    : `<div class="ann-placeholder" style="background:linear-gradient(135deg,#fdf6e3,#fef9ec);border-color:#e8d48a"><div style="font-size:48px;">🏆</div></div>`;
+  return `<div class="ann-card">${imgPart}<div class="ann-body"><div class="ann-meta">${aw.award_date?`<span class="ann-date">📅 ${fmtDateAr(aw.award_date)}</span>`:''}</div><div class="ann-title">${aw.title}</div>${aw.description?`<div class="ann-desc">${aw.description}</div>`:''}</div></div>`;
+}
+
+// ── بناء كارت جائزة (صفحة "عرض الكل") ──────────────────────
+function buildAwardCardFull(aw) {
+  const imgPart = aw.image_data
+    ? `<div class="sp-award-img"><img src="${aw.image_data}" alt="${aw.title}" style="width:100%;height:100%;object-fit:cover;"/></div>`
+    : `<div class="sp-award-img"><div class="sp-award-img-icon">🏆</div></div>`;
+  return `<div class="sp-award-card">${imgPart}<div class="sp-award-body"><div class="sp-ann-meta">${aw.award_date?`<span class="sp-ann-date">📅 ${fmtDateAr(aw.award_date)}</span>`:''}</div><div class="sp-ann-title">${aw.title}</div>${aw.description?`<div class="sp-ann-desc">${aw.description}</div>`:''}</div></div>`;
+}
+
+// ── التشغيل الرئيسي — يجلب من API ثم يبني الكاردات ──────────────
+async function renderContent() {
+  const emptyAnn   = 'لا توجد إعلانات بعد.<br/>ستظهر هنا فور إضافتها من لوحة إدارة المحتوى';
+  const emptyAward = 'لا توجد جوائز بعد.<br/>ستظهر هنا فور إضافتها من لوحة إدارة المحتوى';
+
+  try {
+    const [annRes, awdRes] = await Promise.all([
+      fetch(`${CONTENT_API_BASE}/announcements`),
+      fetch(`${CONTENT_API_BASE}/awards`)
+    ]);
+    if (!annRes.ok || !awdRes.ok) {
+      console.warn('HCS content fetch failed:', annRes.status, awdRes.status);
+    }
+    ANNOUNCEMENTS = await annRes.json();
+    AWARDS        = await awdRes.json();
+  } catch (e) {
+    console.warn('HCS content fetch error:', e.message);
+    ANNOUNCEMENTS = [];
+    AWARDS = [];
+  }
+
+  const annHome = document.getElementById('ann-grid-home');
+  if (annHome) annHome.innerHTML = ANNOUNCEMENTS.length ? ANNOUNCEMENTS.slice(0,3).map(buildAnnCardHome).join('') : emptyState('📢', emptyAnn);
+
+  const annFull = document.getElementById('ann-grid-full');
+  if (annFull) annFull.innerHTML = ANNOUNCEMENTS.length ? ANNOUNCEMENTS.map(buildAnnCardFull).join('') : emptyState('📢', emptyAnn);
+
+  const awdHome = document.getElementById('awards-grid-home');
+  if (awdHome) awdHome.innerHTML = AWARDS.length ? AWARDS.slice(0,3).map(buildAwardCardHome).join('') : emptyState('🏆', emptyAward);
+
+  const awdFull = document.getElementById('awards-grid-full');
+  if (awdFull) awdFull.innerHTML = AWARDS.length ? AWARDS.map(buildAwardCardFull).join('') : emptyState('🏆', emptyAward);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', renderContent);
+} else {
+  renderContent();
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تجمع حائل الصحي — تسجيل الدخول</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pr:#1B4F9B;--pr-d:#0D3272;--pr-l:#E8EEF8;
+      --nv:#1b214d;
+      --tx:#1a2332;--mu:#5a6a82;--bd:#dde3ed;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f4f7fb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* موجات متطابقة مع index.html */
+    #waveCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* الكارد */
+    .login-wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      padding: 24px;
+      animation: fadein .5s ease;
+    }
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 40px 36px 36px;
+      box-shadow: 0 8px 40px rgba(27,33,77,0.12);
+    }
+
+    /* لوجو وعنوان */
+    .logo-area {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .logo-area img {
+      height: 64px;
+      object-fit: contain;
+      margin-bottom: 14px;
+    }
+    .logo-area h1 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--nv);
+      margin-bottom: 4px;
+    }
+    .logo-area p {
+      font-size: 12px;
+      color: var(--mu);
+    }
+
+    /* الفورم */
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--tx);
+      margin-bottom: 7px;
+    }
+    .input-wrap { position: relative; }
+    .input-wrap input {
+      width: 100%;
+      height: 46px;
+      border: 1.5px solid var(--bd);
+      border-radius: 10px;
+      padding: 0 14px 0 42px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 14px;
+      color: var(--tx);
+      background: rgba(255,255,255,0.7);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    .input-wrap input:focus {
+      border-color: var(--pr);
+      box-shadow: 0 0 0 3px rgba(27,79,155,.1);
+      background: #fff;
+    }
+    .input-wrap .icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--mu);
+      pointer-events: none;
+    }
+    .input-wrap .eye-btn {
+      position: absolute;
+      right: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--mu);
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+    .input-wrap .eye-btn:hover { color: var(--pr); }
+
+    /* خطأ */
+    .error-msg {
+      display: none;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #dc2626;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .error-msg.show { display: block; }
+
+    /* زر الدخول */
+    .btn-login {
+      width: 100%;
+      height: 48px;
+      background: var(--pr);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-login:hover  { background: var(--pr-d); }
+    .btn-login:active { transform: scale(.98); }
+    .btn-login:disabled { opacity: .65; cursor: not-allowed; }
+
+    /* رابط الرجوع */
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--mu);
+    }
+    .back-link a {
+      color: var(--pr);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .back-link a:hover { text-decoration: underline; }
+
+    /* فوتر */
+    .page-footer {
+      position: relative;
+      z-index: 1;
+      margin-top: 20px;
+      font-size: 11px;
+      color: var(--mu);
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="waveCanvas"></canvas>
+
+<div class="login-wrap">
+  <div class="card">
+
+    <div class="logo-area">
+      <img src="assets/images/f1.png" alt="تجمع حائل الصحي"/>
+      <h1>إدارة الخدمات الصحية</h1>
+      <p>Hail Health Cluster </p>
+    </div>
+
+    <div class="error-msg" id="errorMsg">يرجى تعبئة جميع الحقول</div>
+
+    <div class="field">
+      <label for="email">البريد الإلكتروني</label>
+      <div class="input-wrap">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5H4.5a2.25 2.25 0 00-2.25 2.25m19.5 0l-9.75 6.75L2.25 6.75"/>
+        </svg>
+        <input type="email" id="email" placeholder="example@moh.gov.sa" autocomplete="email"/>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="password">كلمة المرور</label>
+      <div class="input-wrap">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+        </svg>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password"/>
+        <button class="eye-btn" onclick="togglePass()" type="button" aria-label="إظهار كلمة المرور">
+          <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <button class="btn-login" id="loginBtn" onclick="handleLogin()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/>
+      </svg>
+      تسجيل الدخول
+    </button>
+
+    <div class="back-link">
+      <a href="index.html">→ العودة للرئيسية</a>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">تم التطوير بواسطة م.امجاد الاحمري © 2026</div>
+
+<script>
+  // موجات متطابقة مع index.html
+  const canvas = document.getElementById('waveCanvas');
+  const ctx = canvas.getContext('2d');
+  let progress = 0;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = '#1A6CC8';
+    ctx.globalAlpha = 0.35;
+    ctx.lineWidth = 2.0;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    for (let i = 0; i < 18; i++) {
+      ctx.beginPath();
+      const offset = (i - 9) * 8.0;
+      const phase = progress * 2 * Math.PI + (i * 0.05);
+      ctx.moveTo(0, canvas.height * 0.50 + offset);
+      for (let x = 0; x <= canvas.width; x += 10) {
+        const ratio = x / canvas.width;
+        const y = canvas.height * 0.50 +
+                  Math.sin(ratio * Math.PI * 2 + phase) * 90 +
+                  Math.cos(ratio * Math.PI * 3 - phase * 1.5) * 45 +
+                  offset;
+        ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    progress += 0.0012;
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+
+  function togglePass() {
+    const inp = document.getElementById('password');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+  }
+
+  const API_BASE = 'http://localhost:5050/api';
+
+  async function handleLogin() {
+    const email    = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const errMsg   = document.getElementById('errorMsg');
+    const btn      = document.getElementById('loginBtn');
+
+    errMsg.classList.remove('show');
+
+    if (!email || !password) {
+      errMsg.textContent = 'يرجى تعبئة جميع الحقول';
+      errMsg.classList.add('show');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg> جارٍ التحقق...';
+
+    try {
+      const response = await fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        errMsg.textContent = data.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+        errMsg.classList.add('show');
+        return;
+      }
+
+      // حفظ بيانات الجلسة
+      localStorage.setItem('hcs_token', data.token);
+      localStorage.setItem('hcs_user', JSON.stringify(data.user));
+
+      // التوجيه الذكي حسب الـ role والـ dept_key القادمين من السيرفر
+      const role     = data.user?.role;
+      const deptKey  = data.user?.dept_key;
+      let redirect   = data.redirectUrl;
+
+      if (!redirect) {
+        if (role === 'Super_Admin') {
+          redirect = 'admin.html';
+        } else if (role === 'General_Manager') {
+          redirect = 'dashboard.html';
+        } else if (deptKey === 'content_manager') {
+          redirect = 'content-manager.html';
+        } else if (deptKey) {
+          // كل قسم له مجلد ومسمى ملف مطابق لاسم dept_key بالضبط
+          redirect = `departments/${deptKey}/${deptKey}.html`;
+        } else {
+          redirect = 'content-manager.html';
+        }
+      }
+
+      window.location.href = redirect;
+
+    } catch (err) {
+      errMsg.textContent = 'تعذّر الاتصال بالسيرفر — تأكد من تشغيل الباك إند على المنفذ 5050';
+      errMsg.classList.add('show');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/></svg> تسجيل الدخول';
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleLogin();
+  });
+</script>
+</body>
+</html>
